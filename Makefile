@@ -10,15 +10,15 @@ LIBS = -lm
 
 .PHONY: clean_obj clean_lib clean_exe clean
 
-all: clean setup render.exe
+all: clean setup test.exe cube.exe
 
 setup:
 	mkdir -p lib obj 
 
 #~~~~~~~~~~~~~ Ejecutable ~~~~~~~~~~~~~#
 
-render.exe: $(OBJ)/main.o $(LIB)/render.o
-	@echo "Building render executable..."
+test.exe: $(OBJ)/test.o $(LIB)/render.o
+	@echo "Building test executable..."
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 cube.exe: $(OBJ)/cube.o $(LIB)/render.o $(LIB)/utils.o
@@ -35,8 +35,8 @@ $(LIB)/utils.o: $(SRCLIB)/utils.cpp $(INC)/utils.h
 	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
 
 #~~~~~~~~~~~~~ obj ~~~~~~~~~~~~~#
-$(OBJ)/main.o: $(SRC)/main.cpp
-	@echo "Compiling main module..."
+$(OBJ)/test.o: $(SRC)/test.cpp
+	@echo "Compiling test module..."
 	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
 
 $(OBJ)/cube.o: $(SRC)/cube.cpp
