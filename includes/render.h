@@ -1,6 +1,8 @@
 #ifndef RENDER_H
 #define RENDER_H
 
+#define LUMINANCE_STR ".,-~:;=!*#$"
+
 /**
  * Renders a single point in the screen provided as the character given. Does 
  * not take into account luminance.
@@ -17,5 +19,8 @@
  * @param c Character to use to represent the point in the frame.
  */
 void render_point(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float x, float y, float z, char c);
+
+
+void render_point_luminance(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float x, float y, float z, float nx, float ny, float nz, float lx, float ly, float lz);
 
 #endif
