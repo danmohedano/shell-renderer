@@ -10,7 +10,7 @@ LIBS = -lm
 
 .PHONY: clean_obj clean_lib clean_exe clean
 
-all: clean setup test.exe cube.exe
+all: clean setup test.exe cube.exe luminance.exe
 
 setup:
 	mkdir -p lib obj 
@@ -23,6 +23,10 @@ test.exe: $(OBJ)/test.o $(LIB)/render.o
 
 cube.exe: $(OBJ)/cube.o $(LIB)/render.o $(LIB)/utils.o
 	@echo "Building cube executable..."
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+luminance.exe: $(OBJ)/luminance.o $(LIB)/render.o $(LIB)/utils.o
+	@echo "Building luminance executable..."
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 #~~~~~~~~~~~~~ lib ~~~~~~~~~~~~~#
@@ -41,6 +45,10 @@ $(OBJ)/test.o: $(SRC)/test.cpp
 
 $(OBJ)/cube.o: $(SRC)/cube.cpp
 	@echo "Compiling cube module..."
+	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
+
+$(OBJ)/luminance.o: $(SRC)/luminance.cpp
+	@echo "Compiling luminance module..."
 	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
 
 #~~~~~~~~~~~~~ cleanup ~~~~~~~~~~~~~#
