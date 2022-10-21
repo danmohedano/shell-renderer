@@ -5,8 +5,9 @@
 #include "../includes/render.h"
 #include "../includes/utils.h"
 
-#define S_WIDTH 200
-#define S_HEIGHT 64
+#define S_WIDTH 150
+#define S_HEIGHT 50
+#define PI 3.14159265
 
 int main(void){
     // Screen variables
@@ -16,19 +17,19 @@ int main(void){
     float k2 = 120;
 
     // Rendering variables
-    float increments = 0.35;
+    float increments = 0.5;
     float x, y, z;
 
     // Cube variables
-    float cube_dim = 35;
-    float A = 0;
-    float B = 0;
+    float cube_dim = 20;
+    float A = PI/4;
+    float B = PI/4;
     float C = 0;
 
     // Lighting variables
-    float lx = 0;
-    float ly = 0;
-    float lz = -1;
+    float lx = -1.0/sqrt(3);
+    float ly = -1.0/sqrt(3);
+    float lz = -1.0/sqrt(3);
 
     // Normal vector variables
     float nx, ny, nz;
@@ -81,15 +82,17 @@ int main(void){
 
         // Clear terminal
         printf("\x1b[H");
+
         // Print frame
         for (int k = 0; k < S_WIDTH * S_HEIGHT; ++k){
             putchar(k % S_WIDTH ? frame[k] : 10);
         }
 
-        A += 0.1;
-        B += 0.05;
+        A += 0.2;
+        B += 0.1;
         C += 0.05;
-        usleep(100);
+        //usleep(500000);
+        usleep(100000);
     }
 
     return 0;

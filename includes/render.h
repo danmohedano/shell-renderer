@@ -1,7 +1,7 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#define LUMINANCE_STR ".,-~:;=!*#$"
+#define LUMINANCE_STR ",-~:;=!*#$"
 
 /**
  * Renders a single point in the screen provided as the character given. Does 

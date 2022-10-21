@@ -32,13 +32,19 @@ void render_point_luminance(char *frame, float *zbuff, int s_width, int s_height
 
     // Compute luminance
     float lum = nx * lx + ny * ly + nz * lz;
-    int lum_index = (int) (lum * 11);
+    int lum_index = (int) (lum * 10);
 
     // Update buffers when valid
     if (0 < idx && idx < s_height * s_width){
-        if (ooz > zbuff[idx] && lum > 0){
-            zbuff[idx] = ooz;
-            frame[idx] = LUMINANCE_STR[lum_index];
+        if (ooz >= zbuff[idx]){
+            if (lum >= 0){
+                zbuff[idx] = ooz;
+                frame[idx] = LUMINANCE_STR[lum_index];
+            } else {
+                zbuff[idx] = ooz;
+                frame[idx] = '.';
+            }
+            
         }
     }
 }
