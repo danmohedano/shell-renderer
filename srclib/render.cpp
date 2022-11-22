@@ -1,11 +1,12 @@
 #include "../includes/render.h"
+#include "../includes/utils.h"
 
-void render_point(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float x, float y, float z, char c){
+void render_point(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float *pos, char c){
     // Compute pixel points in the simulated screen
-    z += k2;
-    float ooz = 1 / z;
-    int xp = (int) (s_width / 2 + k1 * x * ooz * 2);  // Takes into account that chars are usually are twice as tall compared to their width
-    int yp = (int) (s_height / 2 + k1 * y * ooz);
+    pos[2] += k2;
+    float ooz = 1 / pos[2];
+    int xp = (int) (s_width / 2 + k1 * pos[0] * ooz * 2);  // Takes into account that chars are usually are twice as tall compared to their width
+    int yp = (int) (s_height / 2 + k1 * pos[1] * ooz);
 
     // Compute buffer index from the coordinates
     int idx = xp + yp * s_width;
@@ -20,19 +21,20 @@ void render_point(char *frame, float *zbuff, int s_width, int s_height, float k1
 }
 
 
-void render_point_luminance(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float x, float y, float z, float nx, float ny, float nz, float lx, float ly, float lz){
+void render_point_luminance(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float *pos, float *normal, float *light){
     // Compute pixel points in the simulated screen
-    z += k2;
-    float ooz = 1 / z;
-    int xp = (int) (s_width / 2 + k1 * x * ooz * 2);  // Takes into account that chars are usually are twice as tall compared to their width
-    int yp = (int) (s_height / 2 + k1 * y * ooz);
+    pos[2] += k2;
+    float ooz = 1 / pos[2];
+    int xp = (int) (s_width / 2 + k1 * pos[0] * ooz * 2);  // Takes into account that chars are usually are twice as tall compared to their width
+    int yp = (int) (s_height / 2 + k1 * pos[1] * ooz);
 
     // Compute buffer index from the coordinates
     int idx = xp + yp * s_width;
 
     // Compute luminance
-    float lum = nx * lx + ny * ly + nz * lz;
-    int lum_index = (int) (lum * 10);
+    normalize(light);  // Needed for correct luminance calculation
+    float lum = normal[0] * light[0] + normal[1] * light[1] + normal[2] * light[2];
+    int lum_index = (int) (lum * LUMINANCE_LEN);
 
     // Update buffers when valid
     if (0 < idx && idx < s_height * s_width){

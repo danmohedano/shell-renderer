@@ -4,7 +4,7 @@ OBJ=./obj
 LIB=./lib
 SRCLIB=./srclib
 
-CC = g++
+CC = gcc
 CFLAGS = -Wall -g
 LIBS = -lm
 
@@ -17,7 +17,7 @@ setup:
 
 #~~~~~~~~~~~~~ Ejecutable ~~~~~~~~~~~~~#
 
-test.exe: $(OBJ)/test.o $(LIB)/render.o
+test.exe: $(OBJ)/test.o $(LIB)/render.o $(LIB)/utils.o
 	@echo "Building test executable..."
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
@@ -30,7 +30,7 @@ luminance.exe: $(OBJ)/luminance.o $(LIB)/render.o $(LIB)/utils.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 #~~~~~~~~~~~~~ lib ~~~~~~~~~~~~~#
-$(LIB)/render.o: $(SRCLIB)/render.cpp $(INC)/render.h
+$(LIB)/render.o: $(SRCLIB)/render.cpp $(INC)/render.h $(INC)/utils.h
 	@echo "Compiling render module..."
 	$(CC) $(CFLAGS) -c $< -o $@ $(LIBS)
 

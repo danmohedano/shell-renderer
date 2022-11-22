@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include "../includes/render.h"
@@ -10,6 +10,7 @@ int main(void){
     float zbuff[S_WIDTH * S_HEIGHT];
     char frame[S_WIDTH * S_HEIGHT];
     float k1 = 40;
+    float pos[3] = {0, 0, -49};
 
     float increments = 0.01;
 
@@ -20,7 +21,8 @@ int main(void){
         // Compute frame
         for (float i = -10; i < 10; i += increments){
             for (float j = -10; j < 10; j += increments){
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, 50, i, j, -49, '~');
+                pos[0] = i; pos[1] = j;
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, 50, pos, '~');
             }
         }
 
