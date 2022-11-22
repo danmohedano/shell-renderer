@@ -1,7 +1,7 @@
-#include <iostream>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#import <math.h>
+#include <math.h>
 #include "../includes/render.h"
 #include "../includes/utils.h"
 
@@ -17,22 +17,18 @@ int main(void){
     float k2 = 120;
 
     // Rendering variables
-    float increments = 0.5;
-    float x, y, z;
+    float increments = 1;
+    float pos[3] = {0};
 
     // Cube variables
     float cube_dim = 20;
-    float A = PI/4;
-    float B = PI/4;
-    float C = 0;
+    float angles[3] = {PI/4, PI/4, 0};
 
     // Lighting variables
-    float lx = -1.0/sqrt(3);
-    float ly = -1.0/sqrt(3);
-    float lz = -1.0/sqrt(3);
+    float light[3] = {1, 0, -1};
 
     // Normal vector variables
-    float nx, ny, nz;
+    float normal[3] = {0};
 
     while (true){
         memset(frame, ' ', S_WIDTH * S_HEIGHT);
@@ -42,41 +38,41 @@ int main(void){
         for (float i = -cube_dim; i < cube_dim; i += increments){
             for (float j = -cube_dim; j < cube_dim; j += increments){
                 // Face F
-                x = i; y = j; z = -cube_dim;
-                nx = 0; ny = 0; nz = -1;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = i; pos[1] = j; pos[2] = -cube_dim;
+                normal[0] = 0; normal[1] = 0; normal[2] = -1;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
                 // Face R
-                x = cube_dim; y = j; z = i;
-                nx = 1; ny = 0; nz = 0;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = cube_dim; pos[1] = j; pos[2] = i;
+                normal[0] = 1; normal[1] = 0; normal[2] = 0;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
                 // Face L
-                x = -cube_dim; y = j; z = -i;
-                nx = -1; ny = 0; nz = 0;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = -cube_dim; pos[1] = j; pos[2] = -i;
+                normal[0] = -1; normal[1] = 0; normal[2] = 0;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
                 // Face B
-                x = -i; y = j; z = cube_dim;
-                nx = 0; ny = 0; nz = 1;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = -i; pos[1] = j; pos[2] = cube_dim;
+                normal[0] = 0; normal[1] = 0; normal[2] = 1;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
                 // Face U
-                x = i; y = cube_dim; z = j;
-                nx = 0; ny = 1; nz = 0;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = i; pos[1] = cube_dim; pos[2] = j;
+                normal[0] = 0; normal[1] = 1; normal[2] = 0;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
                 // Face D
-                x = i; y = -cube_dim; z = -j;
-                nx = 0; ny = -1; nz = 0;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                rotation(nx, ny, nz, A, B, C, &nx, &ny, &nz);
-                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, nx, ny, nz, lx, ly, lz);
+                pos[0] = i; pos[1] = -cube_dim; pos[2] = -j;
+                normal[0] = 0; normal[1] = -1; normal[2] = 0;
+                rotation(pos, angles, pos);
+                rotation(normal, angles, normal);
+                render_point_luminance(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, normal, light);
             }
         }
 
@@ -88,9 +84,9 @@ int main(void){
             putchar(k % S_WIDTH ? frame[k] : 10);
         }
 
-        A += 0.2;
-        B += 0.1;
-        C += 0.05;
+        angles[0] += 0.2;
+        angles[1] += 0.1;
+        angles[2] += 0.05;
         //usleep(500000);
         usleep(100000);
     }

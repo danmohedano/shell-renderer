@@ -1,7 +1,7 @@
-#include <iostream>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#import <math.h>
+#include <math.h>
 #include "../includes/render.h"
 #include "../includes/utils.h"
 
@@ -17,13 +17,11 @@ int main(void){
 
     // Rendering variables
     float increments = 0.35;
-    float x, y, z;
+    float pos[3] = {0};
 
     // Cube variables
     float cube_dim = 35;
-    float A = 0;
-    float B = 0;
-    float C = 0;
+    float angles[3] = {0};
 
     while (true){
         memset(frame, ' ', S_WIDTH * S_HEIGHT);
@@ -33,29 +31,29 @@ int main(void){
         for (float i = -cube_dim; i < cube_dim; i += increments){
             for (float j = -cube_dim; j < cube_dim; j += increments){
                 // Face F
-                x = i; y = j; z = -cube_dim;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '@');
+                pos[0] = i; pos[1] = j; pos[2] = -cube_dim;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '@');
                 // Face R
-                x = cube_dim; y = j; z = i;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '~');
+                pos[0] = cube_dim; pos[1] = j; pos[2] = i;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '~');
                 // Face L
-                x = -cube_dim; y = j; z = -i;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '~');
+                pos[0] = -cube_dim; pos[1] = j; pos[2] = -i;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '~');
                 // Face B
-                x = -i; y = j; z = cube_dim;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '@');
+                pos[0] = -i; pos[1] = j; pos[2] = cube_dim;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '@');
                 // Face U
-                x = i; y = cube_dim; z = j;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '+');
+                pos[0] = i; pos[1] = cube_dim; pos[2] = j;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '+');
                 // Face D
-                x = i; y = -cube_dim; z = -j;
-                rotation(x, y, z, A, B, C, &x, &y, &z);
-                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, x, y, z, '+');
+                pos[0] = i; pos[1] = -cube_dim; pos[2] = -j;
+                rotation(pos, angles, pos);
+                render_point(frame, zbuff, S_WIDTH, S_HEIGHT, k1, k2, pos, '+');
             }
         }
 
@@ -66,9 +64,9 @@ int main(void){
             putchar(k % S_WIDTH ? frame[k] : 10);
         }
 
-        A += 0.1;
-        B += 0.05;
-        C += 0.05;
+        angles[0] += 0.1;
+        angles[1] += 0.05;
+        angles[2] += 0.05;
         usleep(100);
     }
 
