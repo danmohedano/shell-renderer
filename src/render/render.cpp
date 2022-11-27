@@ -1,5 +1,5 @@
-#include "../includes/render.h"
-#include "../includes/utils.h"
+#include "render.h"
+#include "utils/utils.h"
 
 void render_point(char *frame, float *zbuff, int s_width, int s_height, float k1, float k2, float *pos, char c){
     // Compute pixel points in the simulated screen

@@ -23,15 +23,20 @@ The project was inspired by the famous [Have a donut.](https://www.a1k0n.net/200
 
 ## But how (do I use it)?
 
-Usage section.
-
 ### Dependencies
 
-None!
+None required. Just `cmake` for building purposes.
 
 ### Running
 
-How to run the project.
+First, build the project and compile:
+```
+$ mkdir build && cd build
+$ cmake ..
+$ cmake --build .
+```
+
+The executables generated will be located in the `build/` directory you just created.
 
 ## But what?
 
