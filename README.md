@@ -9,13 +9,13 @@
 <!-- TOC -->
 ## Table of Contents
 
-- [But why?](#-but-why)
-- [But how (do I use it)?](#-but-how-do-i-use-it)
-- [But what?](#-but-what)
-- [But how (does it work)?](#-but-how-does-it-work)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [But why?](#but-why)
+- [But how (do I use it)?](#but-how-do-i-use-it)
+- [But what?](#but-what)
+- [But how (does it work)?](#but-how-does-it-work)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## But why?
 
