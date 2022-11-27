@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
-#include "../includes/render.h"
-#include "../includes/utils.h"
+#include "render/render.h"
+#include "utils/utils.h"
 
 #define S_WIDTH 200
 #define S_HEIGHT 64

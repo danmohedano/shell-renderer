@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "../includes/render.h"
+#include "render/render.h"
 
 #define S_WIDTH 144
 #define S_HEIGHT 68
